@@ -32,8 +32,14 @@ over100000_deal
 under100000_deal <- (stock$deal[stock$deal <100000])
 under100000_deal
 
-#여기 아래 부분은 고쳐야 해요,,!!
-over100000_price <- (stocks [stocks >= 500000]) #5개월 간 주당 가격이 100000원 이상
-over100000_price
-under100000_price <- (stocks [stocks < 500000]) #5개월 간 주당 가격이 100000원 이하
-under100000_price
+
+# 5개월 간 주당 가격이 100000원 이상인 주식
+over_100000_price <- stock$stocks[stock$MAR >= 100000 & stock$FEB >= 100000 & stock$JAN >= 100000 & stock$DEC >= 100000 & stock$NOV >= 100000]
+cat("5개월 간 주당 가격이 100000원 이상인 주식:\n")
+print(over_100000_price)
+
+# 5개월 간 주당 가격이 100000원 이하인 주식
+under_100000_price <- stock$stocks[stock$MAR < 100000 & stock$FEB < 100000 & stock$JAN < 100000 & stock$DEC < 100000 & stock$NOV < 100000]
+cat("5개월 간 주당 가격이 100000원 이하인 주식:\n")
+print(under_100000_price)
+
