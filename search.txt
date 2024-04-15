@@ -1,0 +1,8 @@
+[1] Classification Sort           Type           X2020          X2021          X2022         
+<0 rows> (or 0-length row.names)
+[1] Classification Sort           Type           X2020          X2021          X2022         
+<0 rows> (or 0-length row.names)
+[1] Classification Sort           Type           X2020          X2021          X2022         
+<0 rows> (or 0-length row.names)
+[1] Classification Sort           Type           X2020          X2021          X2022         
+<0 rows> (or 0-length row.names)

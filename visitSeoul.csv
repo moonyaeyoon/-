@@ -1,0 +1,20 @@
+﻿Classification,Sort,Type,2020,2021,2022
+한국여행중 서울방문,All,subCount,47.2,57.7,82.4
+,sex,male,42.2,50.5,74.1
+,sex,female,62.3,74.6,90.6
+,age,15-19,75.0,84.4,92.5
+,age,20s,66.7,63.3,88.7
+,age,30s,41.4,54.9,79.6
+,age,40s,44.1,52.3,77.2
+,age,50s,42.3,52.2,77.1
+,age,60s up,48.7,55.3,74.5
+,purpose,leisure,100.0,95.6,95.5
+,purpose,friend,66.9,64.0,81.1
+,purpose,business,38.3,49.9,67.7
+,purpose,education,47.3,69.7,86.1
+,purpose,religion,-,25.0,64.5
+,purpose,etc,75.0,56.4,53.4
+,count,oneTime,44.9,62.5,86.5
+,count,twoTime,48.5,56.7,79.6
+,count,threeTime,58.5,55.3,80.4
+,count,morethanFourTime,44.9,54.3,78.0
