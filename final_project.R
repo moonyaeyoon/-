@@ -230,3 +230,71 @@ hypothesis_test <- function(data_1, data_2) {
   text(z_value, 0.05, paste("Z\n", round(z_value, 2)), col = "blue", pos = 4)
 }
 
+main <- function() {
+  choice <- dlgInput("Enter 'test' / 'line' / 'country' ", "test")$res
+  
+  switch(choice,
+         "test" = {
+           hypothesis_category <- dlgInput("Enter the category to test ('mobile_profit', 'console_profit', 'console_proportion'):", "mobile_profit")$res
+           
+           switch(hypothesis_category,
+                  "mobile_profit" = {
+                    # 2016-2019년과 2020-2023년의 데이터 추출
+                    mobile_profit_2016_2019 <- subset(data_list$game_market_profit, Year >= 2016 & Year <= 2019)$Mobile_Sales
+                    mobile_profit_2020_2023 <- subset(data_list$game_market_profit, Year >= 2020 & Year <= 2023)$Mobile_Sales
+                    hypothesis_test(mobile_profit_2016_2019, mobile_profit_2020_2023)
+                  },
+                  "console_profit" = {
+                    # 2016-2019년과 2020-2023년의 데이터 추출
+                    console_profit_2016_2019 <- subset(data_list$game_market_profit, Year >= 2016 & Year <= 2019)$Console_Sales
+                    console_profit_2020_2023 <- subset(data_list$game_market_profit, Year >= 2020 & Year <= 2023)$Console_Sales
+                    hypothesis_test(console_profit_2016_2019, console_profit_2020_2023)
+                  },
+                  "console_proportion" = {
+                    # 2016-2019년과 2020-2023년의 데이터 추출
+                    console_prop_2016_2019 <- subset(data_list$game_market_proportion, Year >= 2016 & Year <= 2019)$Console
+                    console_prop_2020_2023 <- subset(data_list$game_market_proportion, Year >= 2020 & Year <= 2023)$Console
+                    hypothesis_test(console_prop_2016_2019, console_prop_2020_2023)
+                  },
+                  {
+                    cat("Invalid category. Please choose 'mobile_profit', 'console_profit', or 'console_proportion'.\n")
+                  }
+           )
+         },
+         "line" = {
+           plot_category <- dlgInput("Enter 'proportion' or 'sales'")$res
+           
+           switch(plot_category,
+                  "proportion" = {
+                    plot_proportion()
+                  },
+                  "sales" = {
+                    plot_sales()
+                  },
+                  {
+                    cat("Invalid plot type. Please choose 'proportion' or 'sales'.\n")
+                  }
+           )
+         },
+         "country" = {
+           # 나라 이름 입력 받기
+           country_name <- dlgInput("Enter the country name:", title = "Country Selection")$res
+           
+           # korea 또는 korea_workers인 경우 해당 함수 호출
+           if (country_name == "Korea" || country_name =="Korea_Workers"){
+             plot_korea_data(country_name)
+             
+           } else {
+             # 다른 나라인 경우 해당 함수 호출
+             bar_country_data(country_name)
+           }
+         },
+         {
+           cat("Invalid choice. Please enter 'test', 'line', or 'country'.\n")
+         }
+  )
+}
+
+# main 함수 실행
+main()
+
