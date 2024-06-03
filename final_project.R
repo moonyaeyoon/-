@@ -140,3 +140,41 @@ plot_sales <- function() {
   legend("topleft", legend = c("Console", "Mobile"), col = c("blue", "green"), lty = 1, pch = 1)
   abline(v = 2020, col = "red", lty = 2)
 }
+
+# 선 그래프 - 한국
+plot_korea_data <- function(country_name) {
+  # 엑셀 파일에서 해당하는 나라의 데이터 불러오기
+  xlsx_file <- "game_market_size_country.xlsx"
+  data <- read.xlsx(xlsx_file, sheetName = country_name)
+  data<-data[,-1]
+  
+  # 각 열을 백분율로 변환
+  data_prop <- apply(data, 2, function(x) {
+    round(100 * x / sum(x), 1)
+  })
+  
+  
+  # 연도 데이터
+  years <-c(2020,2021,2022)
+  
+  # 그래프 그리기
+  par(mfrow = c(2, 1))  # 2행 1열 레이아웃 설정
+  
+  # console_percentages 선 그래프
+  plot(years, data_prop[2,], type = "o",
+       xlab = "Year", ylab = "Profit ($)",
+       main = paste("Yearly Percentage Change in", country_name, "Console Market"),
+       col = "blue", lwd = 2, pch = 16)
+  grid()
+  
+  # console_profit 선 그래프
+  plot(years, data[2,], type = "o",
+       xlab = "Year", ylab = "Profit ($)",
+       main = paste("Yearly Profit in", country_name, "Console Market"),
+       col = "red", lwd = 2, pch = 16)
+  grid()
+  
+  # 레이아웃 초기화
+  par(mfrow = c(1, 1))
+}
+
