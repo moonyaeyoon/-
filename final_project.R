@@ -1,10 +1,12 @@
 # 필요한 패키지 설치
 install.packages("svDialogs")
 install.packages("ggplot2")
+install.packages("xlsx")
 
 # 패키지 로드
 library(svDialogs)
 library(ggplot2)
+library(xlsx)
 
 # 점유율 데이터 생성 (2012~2023)
 years_prop <-2012:2023
@@ -111,6 +113,52 @@ for (country in names(data_list_country)) {
   colnames(data_list_country[[country]]) <- years_country
   write.xlsx(x = data_list_country[[country]], file = xlsx_file, sheetName = country, append = TRUE)
 }
+
+
+plot_standard_normal_distribution <- function(year) {
+  # 엑셀 파일에서 데이터 불러오기
+  xlsx_file <- "game_market_data.xlsx"
+  data <- read.xlsx(xlsx_file, sheetName = "Game Market Profit")
+  
+  # 선택한 년도의 데이터 추출
+  year_data <- subset(data, Year == year)
+  
+  if (nrow(year_data) == 0) {
+    stop("해당 년도의 데이터가 없습니다.")
+  }
+  
+  # 매출 데이터 추출
+  sales <- as.numeric(year_data[1, -1])
+  platform <- colnames(year_data)[-1]
+  sales_data <- data.frame(platform = platform, sales = sales)
+  
+  # 평균 및 표준 편차 계산
+  mean_sales <- mean(sales_data$sales)
+  standard_deviation <- sd(sales_data$sales)
+  
+  # z-값 계산
+  z_values <- (sales_data$sales - mean_sales) / standard_deviation
+  sales_data$z_value <- z_values
+  
+  # 표준 정규 분포 데이터 생성
+  x <- seq(-4, 4, length = 100)
+  y <- dnorm(x)
+  norm_data <- data.frame(x = x, y = y)
+  
+  # 표준 정규 분포 그래프와 z-값 함께 그리기
+  ggplot() +  
+    geom_line(data = norm_data, aes(x = x, y = y), color = "blue") +  
+    geom_vline(data = sales_data, aes(xintercept = z_value, color = platform), linetype = "dashed") +  
+    geom_point(data = sales_data, aes(x = z_value, y = 0, color = platform), size = 4) +  
+    labs(title = paste("Platform Standard Normal Distribution \n", year),       
+         x = "Z-Score",       
+         y = "Density") +  
+    theme_minimal() +
+    theme(plot.title = element_text(hjust = 0.5))
+}
+
+
+
 
 # 선 그래프- 점유율
 plot_proportion <- function() {
@@ -231,7 +279,7 @@ hypothesis_test <- function(data_1, data_2) {
 }
 
 main <- function() {
-  choice <- dlgInput("Enter 'test' / 'line' / 'country' ", "test")$res
+  choice <- dlgInput("Enter 'test' / 'year' / 'line' / 'country' ", "test")$res
   
   switch(choice,
          "test" = {
@@ -260,6 +308,11 @@ main <- function() {
                     cat("Invalid category. Please choose 'mobile_profit', 'console_profit', or 'console_proportion'.\n")
                   }
            )
+         },
+         "year"={
+           year <- dlgInput ("Enter Year")$res
+           plot_standard_normal_distribution(year)
+           
          },
          "line" = {
            plot_category <- dlgInput("Enter 'proportion' or 'sales'")$res
