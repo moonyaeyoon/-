@@ -210,7 +210,7 @@ plot_korea_data <- function(country_name) {
   
   # console_percentages 선 그래프
   plot(years, data_prop[2,], type = "o",
-       xlab = "Year", ylab = "Profit ($)",
+       xlab = "Year", ylab = "Percentage(%)",
        main = paste("Yearly Percentage Change in", country_name, "Console Market"),
        col = "blue", lwd = 2, pch = 16)
   grid()
