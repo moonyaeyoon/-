@@ -178,3 +178,22 @@ plot_korea_data <- function(country_name) {
   par(mfrow = c(1, 1))
 }
 
+#막대 - 나라별
+bar_country_data <- function(country_name) {
+  # 엑셀 파일에서 데이터 불러오기
+  xlsx_file <- "game_market_size_country.xlsx"
+  country_data <- read.xlsx(xlsx_file, sheetName =country_name)
+  
+  # 막대 그래프 생성
+  par(mfrow = c(1, 1), mar = c(5, 5, 5, 10))
+  barplot(
+    as.matrix(country_data[,-1]),
+    main = paste(country_name, "Game Market (unit: 1M $)"),
+    col = c('skyblue', 'orange', 'green'),
+    legend.text = c('Social/Casual', 'Console', 'PC Game'),
+    args.legend = list(x='topright', bty = 'o', inset = c(-0.45, -0.0)),
+    beside = FALSE,
+  )
+  par(mfrow = c(1, 1), mar = c(5, 4, 4, 2) + 0.1)
+}
+
