@@ -173,9 +173,10 @@ plot_proportion <- function() {
   lines(data$Year, data$PC, type = "o", col = "red",lwd = 2)
   lines(data$Year, data$Console, type = "o", col = "green",lwd = 2)
   
-  # 범례 추가
-  legend("topleft",legend=c("Mobile","PC","Console"), fill=c('red','blue','green'))
+  # 범례 추가 (Mobile, Console, PC 순서로 변경)
+  legend("topleft", legend = c("Mobile", "Console", "PC"), fill = c('blue', 'green', 'red'))
 }
+
 
 # 선 그래프 - 매출
 plot_sales <- function() {
