@@ -8,6 +8,34 @@ library(svDialogs)
 library(ggplot2)
 library(xlsx)
 
+#콘솔회사 데이터 생성 
+console <- c("Nintendo", "PlayStation", "Xbox")
+release_year <- c(1989, 1994, 2001)
+feature <- c("게임기의 가격은 25,000엔을 넘어서는 안 된다.", "가장 많이 팔린 게임기", "Kinect 장착")
+company <- c("Nintendo", "Sony", "Microsoft")
+
+console_data <- rbind(release_year,company,feature)
+
+colnames(console_data)<- console
+rownames(console_data)<-c('release_year','feature','company')
+
+# CSV 파일로 저장
+write.csv(console_data, "console_data.csv", row.names = FALSE)
+
+# 회사 점유율 
+companies <- c("Nintendo", "Microsoft", "Sony")
+shares <- c(27, 29, 46)
+
+# 각 회사의 이름과 점유율을 결합한 레이블 생성
+labels <- paste(companies, shares, "%", sep=" ")
+
+
+# 파이 그래프 생성
+pie(shares, labels = labels, main = "Market Share of Gaming Companies\n 2022", 
+    col=c("tomato","wheat","yellowgreen") )
+
+
+
 # 점유율 데이터 생성 (2012~2023)
 years_prop <-2012:2023
 mobile_prop <- c(18, 23, 29, 34, 40, 46, 51, 54, 57, 59, 50, 50)
@@ -183,10 +211,10 @@ plot_sales <- function() {
   # 엑셀 파일에서 데이터 읽기
   data <- read.xlsx("game_market_data.xlsx", sheetIndex = 2)
   
-  plot(data$Year, data$Console_Sales, type = "o", col = "blue", ylim = c(0, max(c(data$Console_Sales, data$Mobile_Sales))),
+  plot(data$Year, data$Console_Sales, type = "o", col = "green", ylim = c(0, max(c(data$Console_Sales, data$Mobile_Sales))),
        xlab = "Year", ylab = "Sales ($M)", main = "Console and Mobile Sales (2016-2023)")
-  lines(data$Year, data$Mobile_Sales, type = "o", col = "green")
-  legend("topleft", legend = c("Console", "Mobile"), col = c("blue", "green"), lty = 1, pch = 1)
+  lines(data$Year, data$Mobile_Sales, type = "o", col = "blue")
+  legend("topleft", legend = c("Console", "Mobile"), col = c("green", "blue"), lty = 1, pch = 1)
   abline(v = 2020, col = "red", lty = 2)
 }
 
