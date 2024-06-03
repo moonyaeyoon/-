@@ -118,7 +118,7 @@ for (country in names(data_list_country)) {
 plot_standard_normal_distribution <- function(year) {
   # 엑셀 파일에서 데이터 불러오기
   xlsx_file <- "game_market_data.xlsx"
-  data <- read.xlsx(xlsx_file, sheetName = "Game Market Profit")
+  data <- read.xlsx(xlsx_file, sheetName = "Game Market Proportion")
   
   # 선택한 년도의 데이터 추출
   year_data <- subset(data, Year == year)
