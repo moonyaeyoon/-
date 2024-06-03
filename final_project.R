@@ -128,3 +128,15 @@ plot_proportion <- function() {
   # 범례 추가
   legend("topleft",legend=c("Mobile","PC","Console"), fill=c('red','blue','green'))
 }
+
+# 선 그래프 - 매출
+plot_sales <- function() {
+  # 엑셀 파일에서 데이터 읽기
+  data <- read.xlsx("game_market_data.xlsx", sheetIndex = 2)
+  
+  plot(data$Year, data$Console_Sales, type = "o", col = "blue", ylim = c(0, max(c(data$Console_Sales, data$Mobile_Sales))),
+       xlab = "Year", ylab = "Sales ($M)", main = "Console and Mobile Sales (2016-2023)")
+  lines(data$Year, data$Mobile_Sales, type = "o", col = "green")
+  legend("topleft", legend = c("Console", "Mobile"), col = c("blue", "green"), lty = 1, pch = 1)
+  abline(v = 2020, col = "red", lty = 2)
+}
