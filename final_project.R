@@ -111,3 +111,20 @@ for (country in names(data_list_country)) {
   colnames(data_list_country[[country]]) <- years_country
   write.xlsx(x = data_list_country[[country]], file = xlsx_file, sheetName = country, append = TRUE)
 }
+
+# 선 그래프- 점유율
+plot_proportion <- function() {
+  # 엑셀 파일에서 데이터 읽기
+  data <- read.xlsx("game_market_data.xlsx", sheetIndex = 1)
+  
+  # 초기 plot 설정
+  plot(data$Year, data$Mobile, type = "o", col = "blue", lwd = 2, ylim = c(0, 60),
+       xlab = "Year", ylab = "Percentage", main = "Platform Percentage Over Years")
+  
+  # 다른 플랫폼 추가
+  lines(data$Year, data$PC, type = "o", col = "red",lwd = 2)
+  lines(data$Year, data$Console, type = "o", col = "green",lwd = 2)
+  
+  # 범례 추가
+  legend("topleft",legend=c("Mobile","PC","Console"), fill=c('red','blue','green'))
+}
