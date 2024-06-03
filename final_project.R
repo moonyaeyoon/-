@@ -197,3 +197,36 @@ bar_country_data <- function(country_name) {
   par(mfrow = c(1, 1), mar = c(5, 4, 4, 2) + 0.1)
 }
 
+# 공통적으로 가설 검정을 하는 함수 정의
+hypothesis_test <- function(data_1, data_2) {
+  mean_1 <- mean(data_1)
+  mean_2 <- mean(data_2)
+  
+  sd_1 <- sd(data_1)
+  sd_2 <- sd(data_2)
+  
+  n_1 <- length(data_1)
+  n_2 <- length(data_2)
+  
+  z_value <- (mean_2 - mean_1) / sqrt((sd_1^2 / n_1) + (sd_2^2 / n_2))
+  p_value <- 2 * pnorm(-abs(z_value))
+  
+  cat("Mean (Data 1):", mean_1, "\n")
+  cat("Mean (Data 2):", mean_2, "\n")
+  cat("SD (Data 1):", sd_1, "\n")
+  cat("SD (Data 2):", sd_2, "\n")
+  cat("Z-value:", z_value, "\n")
+  cat("P-value:", p_value, "\n")
+  
+  threshold <- 1.65
+  x <- seq(-3, 3, length = 100)
+  y <- dnorm(x)
+  plot(x, y, type = "l", lwd = 2, col = "black", main = "Z-test", xlab = "Z-Score", ylab = "Density")
+  abline(v = threshold, col = "red", lty = 2)
+  abline(v = -threshold, col = "red", lty = 2)
+  abline(v = z_value, col = "blue", lty = 2)
+  text(threshold, 0.05, paste("Threshold\n", threshold), col = "red", pos = 4)
+  text(-threshold, 0.05, paste("Threshold\n", -threshold), col = "red", pos = 4)
+  text(z_value, 0.05, paste("Z\n", round(z_value, 2)), col = "blue", pos = 4)
+}
+
